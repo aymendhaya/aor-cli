@@ -1,0 +1,19 @@
+{
+  "name": "aor-cli",
+  "version": "0.0.1",
+  "description": "Command Line Interface for admin-on-rest Framework Edit",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aymendhaya/aor-cli.git"
+  },
+  "author": "Aymen Dhaya <aymendhaya@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aymendhaya/aor-cli/issues"
+  },
+  "homepage": "https://github.com/aymendhaya/aor-cli#readme"
+}

@@ -114,6 +114,7 @@ export default props => (
           <TextField source="id" />
           <TextField source="firstname" />
           <TextField source="lastname" />
+          <EditButton basePath="BASEPATH" />
         </Datagrid>
       }
     />

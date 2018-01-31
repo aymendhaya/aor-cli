@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/aymendhaya/aor-cli/issues"
   },
-  "homepage": "https://github.com/aymendhaya/aor-cli#readme"
+  "homepage": "https://github.com/aymendhaya/aor-cli#readme",
+  "dependencies": {
+    "chalk": "^2.3.0"
+  }
 }

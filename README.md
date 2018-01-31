@@ -10,13 +10,13 @@ $ npm install -g aor-cli
 # Create Single Module
 
 ```
-src/components/modules/ $ aor create FirstModule with List implement id, firstname, lastname
+$aor create FirstModule with List implement id, firstname, lastname
 ```
 
  Result:
 ```bash
-src/components/modules/FirstModule/List.js
-src/components/modules/FirstModule/index.js
+./FirstModule/List.js
+./FirstModule/index.js
 ```
 
  FirstModule/List.js
@@ -30,8 +30,6 @@ import {
   Responsive,
   SimpleList
 } from 'admin-on-rest';
-import { ShowButton } from 'admin-on-rest/lib/mui/button';
-import Filter from './Filter';
 
 export default props => (
   <List {...props} >
@@ -78,15 +76,15 @@ import FirstModule from './components/FirstModule';
 # Create Multiple Modules
 
 ```
-src/components/modules/ $ aor create SecondModule with List, Create, Update implement id, firstname, lastname
+ $aor create SecondModule with List, Create, Update implement id, firstname, lastname
 ```
 
  Result:
 ```bash
-src/components/modules/SecondModule/List.js
-src/components/modules/SecondModule/Create.js
-src/components/modules/SecondModule/Update.js
-src/components/modules/SecondModule/index.js
+./SecondModule/List.js
+./SecondModule/Create.js
+./SecondModule/Update.js
+./SecondModule/index.js
 ```
 
  SecondModule/List.js
@@ -100,8 +98,6 @@ import {
   Responsive,
   SimpleList
 } from 'admin-on-rest';
-import { ShowButton } from 'admin-on-rest/lib/mui/button';
-import Filter from './Filter';
 
 export default props => (
   <List {...props} >
@@ -141,7 +137,7 @@ export default props => (
         <TextInput source="id" />
         <TextInput source="firstname" />
         <TextInput source="lastname" />
-    <SimpleForm>
+    </SimpleForm>
   </Create>
 );
 ```
@@ -162,7 +158,7 @@ export default props => (
         <TextInput source="id" />
         <TextInput source="firstname" />
         <TextInput source="lastname" />
-    <SimpleForm>
+    </SimpleForm>
   </Edit>
 );
 ```

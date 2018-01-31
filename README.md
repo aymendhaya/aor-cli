@@ -76,14 +76,14 @@ import FirstModule from './components/FirstModule';
 # Create Multiple Modules
 
 ```
- $aor create SecondModule with List, Create, Update implement id, firstname, lastname
+ $aor create SecondModule with List, Create, Edit implement id, firstname, lastname
 ```
 
  Result:
 ```bash
 ./SecondModule/List.js
 ./SecondModule/Create.js
-./SecondModule/Update.js
+./SecondModule/Edit.js
 ./SecondModule/index.js
 ```
 

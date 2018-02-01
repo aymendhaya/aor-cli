@@ -8,18 +8,29 @@ $ npm install -g aor-cli
 ```
 
 # Create Single Module
-
+>(Note: this cli will take the folder name as same as resourse name. That will make things look simpler and better)
 ```
-$aor create FirstModule with List implement id, firstname, lastname
-```
-
- Result:
-```bash
-./FirstModule/List.js
-./FirstModule/index.js
+$aor create first_module with List implement id, firstname, lastname
 ```
 
- FirstModule/List.js
+ Console Output:
+```
+|--first_module
+        |-- index.js
+        |-- List.js
+
+            /// COPY THIS RESULT TO YOU MAIN MODULE ///
+
+
+
+
+
+            import FirstModule from 'path/to/first_module';
+
+            <Resource name="first_module" list="FirstModule.List" />
+```
+
+ first_module/List.js
 
 ```jsx
 import React from 'react';
@@ -27,32 +38,19 @@ import {
   List,
   Datagrid,
   TextField,
-  Responsive,
-  SimpleList
 } from 'admin-on-rest';
 
 export default props => (
   <List {...props} >
-    <Responsive
-      small={
-        <SimpleList
-          primaryText={record => record.id}
-          secondaryText={record => record.firstname}
-          tertiaryText={record => record.lastname}
-        />
-      }
-      medium={
         <Datagrid>
           <TextField source="id" />
           <TextField source="firstname" />
           <TextField source="lastname" />
         </Datagrid>
-      }
-    />
   </List>
 );
 ```
- FirstModule/index.js
+ first_module/index.js
 
 ```js
 import List from './List';
@@ -65,10 +63,10 @@ export default { List };
 ```js
 // This section should be added manually
 
-import FirstModule from './components/FirstModule';
+import FirstModule from './components/first_module';
 
     <Resource
-      name="BASEPATH"
+      name="first_module"
       list={FirstModule.List}
     />
 ```
@@ -76,53 +74,51 @@ import FirstModule from './components/FirstModule';
 # Create Multiple Modules
 
 ```
- $aor create SecondModule with List, Create, Edit implement id, firstname, lastname
+ $aor create second_module with List, Create, Edit implement id, firstname, lastname
 ```
 
  Result:
-```bash
-./SecondModule/List.js
-./SecondModule/Create.js
-./SecondModule/Edit.js
-./SecondModule/index.js
+```
+|--second_module
+        |-- Create.js
+        |-- index.js
+        |-- Edit.js
+        |-- List.js
+
+            /// COPY THIS RESULT TO YOU MAIN MODULE ///
+
+
+
+
+
+            import SecondModule from 'path/to/second_module';
+
+            <Resource name="second_module" list="SecondModule.List" edit="SecondModule.Edit" create="SecondModule.Create" />
 ```
 
- SecondModule/List.js
+ second_module/List.js
 
 ```jsx
 import React from 'react';
 import {
   List,
   Datagrid,
-  TextField,
-  Responsive,
-  SimpleList
+  TextField
 } from 'admin-on-rest';
 
 export default props => (
   <List {...props} >
-    <Responsive
-      small={
-        <SimpleList
-          primaryText={record => record.id}
-          secondaryText={record => record.firstname}
-          tertiaryText={record => record.lastname}
-        />
-      }
-      medium={
         <Datagrid>
           <TextField source="id" />
           <TextField source="firstname" />
           <TextField source="lastname" />
-          <EditButton basePath="BASEPATH" />
+          <EditButton basePath="second_module" />
         </Datagrid>
-      }
-    />
   </List>
 );
 ```
 
-SecondModule/Create.js
+second_module/Create.js
 
 ```jsx
 import React from 'react';
@@ -143,7 +139,7 @@ export default props => (
 );
 ```
 
-SecondModule/Edit.js
+second_module/Edit.js
 
 ```jsx
 import React from 'react';
@@ -163,7 +159,7 @@ export default props => (
   </Edit>
 );
 ```
- SecondModule/index.js
+ second_module/index.js
 
 ```js
 import List from './List';
@@ -178,10 +174,10 @@ export default { List, Create, Edit };
 ```js
 // This section should be added manually
 
-import SecondModule from './components/SecondModule';
+import SecondModule from './components/second_module';
 
     <Resource
-      name="BASEPATH"
+      name="second_module"
       list={SecondModule.List}
       create={SecondModule.Create}
       edit={SecondModule.Edit}

@@ -1,5 +1,5 @@
 # aor-cli
-Command Line Interface for admin-on-rest Framework
+Command Line Interface for [admin-on-rest](https://github.com/marmelab/admin-on-rest/) Framework
 
 ## Install
 

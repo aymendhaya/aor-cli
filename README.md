@@ -10,7 +10,7 @@ $ npm install -g aor-cli
 # Create Single Module
 >(Note: this cli will take the folder name as same as resourse name. That will make things look simpler and better)
 ```
-$aor create first_module with List implement id, firstname, lastname
+$aor create first_module List implement id, firstname, lastname
 ```
 
  Console Output:
@@ -74,7 +74,7 @@ import FirstModule from './components/first_module';
 # Create Multiple Modules
 
 ```
- $aor create second_module with List, Create, Edit implement id, firstname, lastname
+ $aor create second_module List, Create, Edit implement id, firstname, lastname
 ```
 
  Result:

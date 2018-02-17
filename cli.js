@@ -1,7 +1,7 @@
 var fs = require("fs");
 var rimraf = require("rimraf");
 var path = require("path");
-const chalk = require("chalk");
+var chalk = require("chalk");
 var moduleName = process.argv.slice(2)[0];
 var subModules = process.argv.slice(3, process.argv.indexOf("implement"));
 var sources = process.argv
@@ -129,7 +129,7 @@ function aorEdit() {
     TextInput,
     SimpleForm
   } from 'admin-on-rest';
-  
+
   export default props => (
     <Edit {...props} >
       <SimpleForm>

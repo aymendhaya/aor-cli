@@ -1,140 +1,99 @@
-var fs = require("fs");
-var rimraf = require("rimraf");
-var path = require("path");
-var chalk = require("chalk");
+var fs = require('fs');
+var chalk = require('chalk');
 
 var cl = checkCmdLine();
 
-if (cl.valid && cl.operation === "create") {
-  if (!fs.existsSync(cl.fname)) {
-    fs.mkdirSync(cl.fname);
-    console.log(chalk.green.bold("|--" + cl.fname));
-    fs.appendFile(cl.fname + "/index.js", aorIndex(cl.add), function(err) {
+if (cl.valid && cl.operation === 'create') {
+  if (!fs.existsSync(cl.module_name)) {
+    fs.mkdirSync(cl.module_name);
+    console.log(chalk.green.bold('|--' + cl.module_name));
+    fs.appendFile(cl.module_name + '/index.js', aorIndex(cl.add), function(err) {
       if (err) throw err;
-      console.log(chalk.green("\t|-- index.js"));
+      console.log(chalk.green('\t|-- index.js'));
     });
     cl.add.map((filename, index) => {
-      aor(filename)
-        ? fs.appendFile(
-            cl.fname + "/" + filename + ".js",
-            aor(filename),
-            function(err) {
-              if (err) throw err;
-              console.log(chalk.green("\t|-- " + filename + ".js"));
-            }
-          )
-        : null;
+      let condition = aor(filename);
+      if (condition !== null) {
+        fs.appendFile(cl.module_name + '/' + filename + '.js', aor(filename), err => {
+          if (err) throw err;
+          console.log(chalk.green('\t|-- ' + filename + '.js'));
+        });
+      }
 
-      index === cl.add.length - 1
-        ? setTimeout(function() {
-            let listProp =
-              cl.add.indexOf("List") > -1 ? `list="${cl.fname}.List"` : "";
-            let editProp =
-              cl.add.indexOf("Edit") > -1 ? `edit="${cl.fname}.Edit"` : "";
-            let createProp =
-              cl.add.indexOf("Create") > -1
-                ? `create="${cl.fname}.Create"`
-                : "";
-            let showProp =
-              cl.add.indexOf("Show") > -1 ? `show="${cl.fname}.Show"` : "";
-            console.log(
-              chalk.yellow.bold(`
-              /// COPY THIS RESULT TO YOU MAIN MODULE ///\n\n\n\n\n
-              import ${cl.fname} from 'path/to/${cl.fname}';\n
-              <Resource name="${
-                cl.fname
-              }" ${listProp} ${editProp} ${createProp} ${showProp}/> `)
-            );
-          }, 1000)
-        : null;
+      if (index === cl.add.length - 1)
+        setTimeout(function() {
+          let listProp = cl.add.indexOf('List') > -1 ? `list="${cl.module_name}.List"` : '';
+          let editProp = cl.add.indexOf('Edit') > -1 ? `edit="${cl.module_name}.Edit"` : '';
+          let createProp = cl.add.indexOf('Create') > -1 ? `create="${cl.module_name}.Create"` : '';
+          let showProp = cl.add.indexOf('Show') > -1 ? `show="${cl.module_name}.Show"` : '';
+          console.log(
+            chalk.yellow(`
+              /// COPY THIS RESULT TO YOU MAIN MODULE ///\n\n\n
+              import ${cl.module_name} from 'path/to/${cl.module_name}';\n
+              <Resource name="${cl.module_name}" ${listProp} ${editProp} ${createProp} ${showProp}/> `)
+          );
+        }, 1000);
     });
   } else {
-    console.log(chalk.red(cl.fname + " ALREADY EXIST..."));
+    console.log(chalk.red(cl.module_name + ' ALREADY EXIST...'));
   }
-} else if (cl.valid && cl.operation === "update") {
-  console.log(chalk.green.bold("|--" + cl.fname));
-  fs.appendFile(cl.fname + "/index.js", aorIndex(cl.add), function(err) {
+} else if (cl.valid && cl.operation === 'update') {
+  console.log(chalk.green.bold('|--' + cl.module_name));
+  fs.appendFile(cl.module_name + '/index.js', aorIndex(cl.add), function(err) {
     if (err) throw err;
-    console.log(chalk.green("\t|-- index.js"));
+    console.log(chalk.green('\t|-- index.js'));
   });
   cl.add.map((filename, index) => {
-    aor(filename)
-      ? fs.appendFile(
-          cl.fname + "/" + filename + ".js",
-          aor(filename),
-          function(err) {
-            if (err) throw err;
-            console.log(chalk.green("\t|-- " + filename + ".js"));
-          }
-        )
-      : null;
+    if (aor(filename)) {
+      fs.appendFile(cl.module_name + '/' + filename + '.js', aor(filename), function(err) {
+        if (err) throw err;
+        console.log(chalk.green('\t|-- ' + filename + '.js'));
+      });
+    }
 
-    index === cl.add.length - 1
-      ? setTimeout(function() {
-          let listProp =
-            cl.add.indexOf("List") > -1 ? `list="${cl.fname}.List"` : "";
-          let editProp =
-            cl.add.indexOf("Edit") > -1 ? `edit="${cl.fname}.Edit"` : "";
-          let createProp =
-            cl.add.indexOf("Create") > -1 ? `create="${cl.fname}.Create"` : "";
-          let showProp =
-            cl.add.indexOf("Show") > -1 ? `show="${cl.fname}.Show"` : "";
-          console.log(
-            chalk.yellow.bold(`
+    if (index === cl.add.length - 1)
+      setTimeout(function() {
+        let listProp = cl.add.indexOf('List') > -1 ? `list="${cl.module_name}.List"` : '';
+        let editProp = cl.add.indexOf('Edit') > -1 ? `edit="${cl.module_name}.Edit"` : '';
+        let createProp = cl.add.indexOf('Create') > -1 ? `create="${cl.module_name}.Create"` : '';
+        let showProp = cl.add.indexOf('Show') > -1 ? `show="${cl.module_name}.Show"` : '';
+        console.log(
+          chalk.yellow.bold(`
               /// COPY THIS RESULT TO YOU MAIN MODULE ///\n\n\n\n\n
-              import ${cl.fname} from 'path/to/${cl.fname}';\n
-              <Resource name="${
-                cl.fname
-              }" ${listProp} ${editProp} ${createProp} ${showProp}/> `)
-          );
-        }, 1000)
-      : null;
+              import ${cl.module_name} from 'path/to/${cl.module_name}';\n
+              <Resource name="${cl.module_name}" ${listProp} ${editProp} ${createProp} ${showProp}/> `)
+        );
+      }, 1000);
   });
 } else {
-  console.log(cl.message);
+  console.log(cl.message, '\n\n', cl, '\n\n');
 }
-// { valid: false,
-//   errID: 1,
-//   message: '\u001b[31msynthax error: "create" or "update" command not found...\u001b[39m',
-//   operation: undefined,
-//   fname: undefined,
-//   add: [],
-//   src: [] }
 
 function aorIndex(subModules) {
-  let create =
-    subModules.indexOf("Create") > -1 ? "import Create from './Create';\n" : "";
-  let edit =
-    subModules.indexOf("Edit") > -1 ? "import Edit from './Edit';\n" : "";
-  let list =
-    subModules.indexOf("List") > -1 ? "import List from './List';\n" : "";
-  let show =
-    subModules.indexOf("Show") > -1 ? "import Show from './Show';\n" : "";
-  let Mports = "".concat(create, edit, list, show);
-  let Xports = "\nexport default { " + subModules.join(", ") + " };";
-  let index = Mports.concat(Xports);
-  return index;
+  let _imports = subModules.map(subModule => `import ${subModule} from './${subModule}';`).join('\n');
+  let _exports = '\nexport default { ' + subModules.join(', ') + ' };';
+  return _imports.concat(_exports);
 }
 
 function aor(moduleName) {
   let output = null;
-  if (moduleName === "Create") {
+  if (moduleName === 'Create') {
     output = aorCreate();
   }
-  if (moduleName === "List") {
+  if (moduleName === 'List') {
     output = aorList();
   }
-  if (moduleName === "Show") {
+  if (moduleName === 'Show') {
     output = aorShow();
   }
-  if (moduleName === "Edit") {
+  if (moduleName === 'Edit') {
     output = aorEdit();
   }
   return output;
 }
 
 function aorCreate() {
-  items = cl.src.map(src => `<TextInput source="${src}" />`).join("\n\t");
+  items = cl.src.map(src => `<TextInput source="${src}" />`).join('\n\t');
 
   return `
 import React from 'react';
@@ -154,7 +113,7 @@ export default props => (
   `;
 }
 function aorShow() {
-  items = cl.src.map(src => `<TextField source="${src}" />`).join("\n\t");
+  items = cl.src.map(src => `<TextField source="${src}" />`).join('\n\t');
   return `
 import React from 'react';
 import { SimpleShowLayout, Show, TextField } from 'admin-on-rest';
@@ -169,7 +128,7 @@ export default props => (
   `;
 }
 function aorEdit() {
-  items = cl.src.map(src => `<TextInput source="${src}" />`).join("\n\t");
+  items = cl.src.map(src => `<TextInput source="${src}" />`).join('\n\t');
 
   return `
   import React from 'react';
@@ -190,7 +149,7 @@ function aorEdit() {
 }
 
 function aorList() {
-  items = cl.src.map(src => `<TextField source="${src}" />`).join("\n\t");
+  items = cl.src.map(src => `<TextField source="${src}" />`).join('\n\t');
   return `
 import React from 'react';
 import {
@@ -214,27 +173,23 @@ function checkCmdLine() {
   var response = {};
   var cl = process.argv.slice(2);
 
-  var chkcr = cl[0] === "create";
-  var chkup = cl[0] === "update";
+  var chkcr = cl[0] === 'create';
+  var chkup = cl[0] === 'update';
   output.push({
     level: 1,
     status: chkcr || chkup,
     err: 'synthax error: "create" or "update" command not found...'
   });
 
-  var chkmodulename =
-    cl[1] !== undefined &&
-    cl[1] !== "create" &&
-    cl[1] !== "update" &&
-    cl[1] !== "add";
+  var chkmodulename = cl[1] !== undefined && cl[1] !== 'create' && cl[1] !== 'update' && cl[1] !== 'add';
 
   output.push({
     level: 2,
     status: chkmodulename,
-    err: "synthax error: wrong or invalid module name..."
+    err: 'synthax error: wrong or invalid module name...'
   });
 
-  var chkadd = cl[2] === "add";
+  var chkadd = cl[2] === 'add';
 
   output.push({
     level: 3,
@@ -242,14 +197,11 @@ function checkCmdLine() {
     err: 'synthax error: prefix "add" not found...'
   });
 
-  var chkadddata =
-    cl.indexOf("sources") > -1
-      ? cl.slice(3, cl.indexOf("sources"))
-      : cl.slice(3, cl.length);
+  var chkadddata = cl.indexOf('sources') > -1 ? cl.slice(3, cl.indexOf('sources')) : cl.slice(3, cl.length);
 
   var validadds = true;
   for (var i = 0; i < chkadddata.length; i++) {
-    if (!["Create", "Edit", "Show", "List"].includes(chkadddata[i])) {
+    if (!['Create', 'Edit', 'Show', 'List'].includes(chkadddata[i])) {
       validadds = false;
       break;
     }
@@ -258,11 +210,10 @@ function checkCmdLine() {
   output.push({
     level: 4,
     status: chkadddata.length > 0 && chkadd && validadds,
-    err:
-      "missing or wrong data: only one or multiple plugins from [List, Show, Create, Edit] can be added"
+    err: 'missing or wrong data: only one or multiple plugins from [List, Show, Create, Edit] can be added'
   });
 
-  var chksrc = cl.indexOf("sources") > 3;
+  var chksrc = cl.indexOf('sources') > 3;
 
   output.push({
     level: 5,
@@ -270,15 +221,12 @@ function checkCmdLine() {
     err: 'synthax error: prefix "sources" not found or misplaced...'
   });
 
-  var chksrcdata =
-    cl.indexOf("sources") > -1
-      ? cl.slice(cl.indexOf("sources") + 1, cl.length)
-      : [];
+  var chksrcdata = cl.indexOf('sources') > -1 ? cl.slice(cl.indexOf('sources') + 1, cl.length) : [];
 
   output.push({
     level: 6,
     status: chksrcdata.length > 0 && chksrc && chkadd,
-    err: "missing data: at least one source should be declared."
+    err: 'missing data: at least one source should be declared.'
   });
 
   errorLog = output.filter(level => !level.status);
@@ -287,18 +235,18 @@ function checkCmdLine() {
     errorLog.length > 0
       ? {
           valid: false,
-          errID: errorLog[0].level,
+          errLevel: errorLog[0].level,
           message: chalk.red(errorLog[0].err),
           operation: cl[0],
-          fname: cl[1],
+          module_name: cl[1],
           add: chkadddata,
           src: chksrcdata
         }
       : {
           valid: true,
-          message: "VALID COMMAND LINE STRUCTURE",
+          message: 'VALID COMMAND LINE STRUCTURE',
           operation: cl[0],
-          fname: cl[1],
+          module_name: cl[1],
           add: chkadddata,
           src: chksrcdata
         };

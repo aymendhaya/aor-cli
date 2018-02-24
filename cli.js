@@ -1,5 +1,7 @@
+#!/usr/bin/env node
 var fs = require('fs');
 var chalk = require('chalk');
+var path = require('path');
 
 var cl = checkCmdLine();
 

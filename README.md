@@ -1,4 +1,7 @@
-# aor-cli
+## aor-cli 
+[![Build Status](https://travis-ci.org/aymendhaya/aor-cli.svg?branch=master)](https://travis-ci.org/aymendhaya/aor-cli) 
+[![npm version](https://img.shields.io/npm/v/aor-cli.svg?style=flat)](https://www.npmjs.com/package/aor-cli) 
+
 Command Line Interface for [admin-on-rest](https://github.com/marmelab/admin-on-rest/) Framework
 
 ## Install
@@ -27,7 +30,7 @@ $aor create first_module add List sources id firstname lastname
 
             import FirstModule from 'path/to/first_module';
 
-            <Resource name="first_module" list="FirstModule.List" />
+            <Resource name="first_module" list={FirstModule.List} />
 ```
 
  first_module/List.js
@@ -93,7 +96,7 @@ import FirstModule from './components/first_module';
 
             import SecondModule from 'path/to/second_module';
 
-            <Resource name="second_module" list="SecondModule.List" edit="SecondModule.Edit" create="SecondModule.Create" />
+            <Resource name="second_module" list={SecondModule.List} edit={SecondModule.Edit} create={SecondModule.Create} />
 ```
 
  second_module/List.js

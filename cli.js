@@ -25,10 +25,10 @@ if (cl.valid && cl.operation === 'create') {
 
       if (index === cl.add.length - 1)
         setTimeout(function() {
-          let listProp = cl.add.indexOf('List') > -1 ? `list="${cl.module_name}.List"` : '';
-          let editProp = cl.add.indexOf('Edit') > -1 ? `edit="${cl.module_name}.Edit"` : '';
-          let createProp = cl.add.indexOf('Create') > -1 ? `create="${cl.module_name}.Create"` : '';
-          let showProp = cl.add.indexOf('Show') > -1 ? `show="${cl.module_name}.Show"` : '';
+          let listProp = cl.add.indexOf('List') > -1 ? `list={${cl.module_name}.List}` : '';
+          let editProp = cl.add.indexOf('Edit') > -1 ? `edit={${cl.module_name}.Edit}` : '';
+          let createProp = cl.add.indexOf('Create') > -1 ? `create={${cl.module_name}.Create}` : '';
+          let showProp = cl.add.indexOf('Show') > -1 ? `show={${cl.module_name}.Show}` : '';
           console.log(
             chalk.yellow(`
               /// COPY THIS RESULT TO YOU MAIN MODULE ///\n\n\n
